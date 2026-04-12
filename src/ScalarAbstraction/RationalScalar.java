@@ -2,8 +2,8 @@ package ScalarAbstraction;
 
 public class RationalScalar implements Scalar{
     //fields
-    private int numerator;
-    private int denominator;
+    private final int numerator;
+    private final int denominator;
 
     //constructors
     /*
@@ -99,13 +99,13 @@ public class RationalScalar implements Scalar{
             throw new IllegalArgumentException("input argument is null");
         if(obj instanceof Scalar) {
             RationalScalar other = (RationalScalar) obj;
-            return (numerator == other.getNumerator()) && (denominator == other.getDenominator());
+            return (numerator * other.getDenominator()) == (denominator * other.getNumerator());
         }
         return false;
     }
     @Override
     public String toString(){
-        return String.valueOf(numerator) + "/" + String.valueOf(denominator);
+        return numerator + "/" + denominator;
     }
 
     /*
