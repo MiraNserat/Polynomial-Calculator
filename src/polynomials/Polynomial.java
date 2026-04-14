@@ -103,6 +103,20 @@ public class  Polynomial {
 
         return result;
     }
+    public Polynomial derivative() {
+
+        Polynomial res = new Polynomial();
+
+        for (Monomial m : this.monomials) {
+            Monomial tmp = m.derivative();
+
+            if (tmp.sign() != 0) {
+                res.monomials.add(tmp);
+            }
+        }
+
+        return res;
+    }
     public boolean equals(Object o) {
 
         if (!(o instanceof Polynomial))
