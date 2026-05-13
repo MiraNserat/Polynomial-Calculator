@@ -59,7 +59,7 @@ public class IntegerScalar implements Scalar{
         if(obj == null)
             throw new IllegalArgumentException("input argument is null");
         if(obj instanceof Scalar)
-            return number == ((IntegerScalar) obj).getValue();
+            return number == ((IntegerScalar) obj).number;
         return false;
 
     }
@@ -68,12 +68,6 @@ public class IntegerScalar implements Scalar{
         return String.valueOf(number);
     }
 
-    /*
-     * Returns the Integer value of this Scalar
-     */
-    public int getValue(){
-        return number;
-    }
 
     /*
      * Creates and Returns a new Integer Scalar that represents the sum of
@@ -81,8 +75,8 @@ public class IntegerScalar implements Scalar{
      * @param "s" the Scalar that is added to this Integer Scalar
      */
     @Override
-    public Scalar addInteger(Scalar s) {
-        return new IntegerScalar(((IntegerScalar)s).number + number);
+    public Scalar addInteger(IntegerScalar s) {
+        return new IntegerScalar(s.number + number);
     }
 
     /*
@@ -91,9 +85,9 @@ public class IntegerScalar implements Scalar{
      * @param "s" the Scalar that is added to this Integer Scalar
      */
     @Override
-    public Scalar addRational(Scalar s) {
-        int demo = ((RationalScalar) s).getDenominator();
-        int nume = ((RationalScalar) s).getNumerator();
+    public Scalar addRational(RationalScalar s) {
+        int demo = s.getDenominator();
+        int nume = s.getNumerator();
         return new RationalScalar((demo * number) + nume, demo).reduce();
     }
 
@@ -102,8 +96,8 @@ public class IntegerScalar implements Scalar{
      *  multiplying this Integer with the given Integer Scalar
      * @param "s" the Scalar that is added to this Integer Scalar
      */
-    public Scalar mulInteger(Scalar s){
-        return new IntegerScalar(((IntegerScalar) s).number * number);
+    public Scalar mulInteger(IntegerScalar s){
+        return new IntegerScalar( s.number * this.number);
     }
 
     /*
@@ -111,9 +105,26 @@ public class IntegerScalar implements Scalar{
      * multiplying this Integer with the given Rational Scalar
      * @param "s" the Rational Scalar that is multiplied with this Scalar
      */
-    public Scalar mulRational (Scalar s) {
-        int demo = ((RationalScalar) s).getDenominator();
-        int nume = ((RationalScalar) s).getNumerator();
+    public Scalar mulRational (RationalScalar s) {
+        int demo = s.getDenominator();
+        int nume = s.getNumerator();
         return new RationalScalar(nume * number, demo).reduce();
+    }
+
+    @Override
+    public Scalar addReal(RealScalar s) {
+        return new RealScalar(s.getNumber() + this.number);
+    }
+
+    @Override
+    public Scalar mulReal(RealScalar s) {
+        return new RealScalar(s.getNumber() * this.number);
+    }
+
+    /*
+     * returns the value of Number
+     */
+    public int getNumber(){
+        return number;
     }
 }

@@ -92,6 +92,7 @@ public class RationalScalar implements Scalar{
             else
                 return 1;
         }
+
     }
     @Override
     public boolean equals(Object obj){
@@ -99,7 +100,7 @@ public class RationalScalar implements Scalar{
             throw new IllegalArgumentException("input argument is null");
         if(obj instanceof Scalar) {
             RationalScalar other = (RationalScalar) obj;
-            return (numerator * other.getDenominator()) == (denominator * other.getNumerator());
+            return (numerator * other.denominator) == (denominator * other.numerator);
         }
         return false;
     }
@@ -113,21 +114,21 @@ public class RationalScalar implements Scalar{
      * Of this Rational Scalar with the given Integer Scalar
      * @param "s" the Integer Scalar that is added to this Rational Scalar
      */
-    @Override
-    public Scalar addInteger(Scalar s){
-        int num = ((IntegerScalar) s).getValue();
-        return new RationalScalar((denominator * num) + numerator, denominator).reduce();
-    }
-
     /*
      * Creates and Returns a new Rational Scalar that represents the sum of
      * This Rational scalar with the given Rational Scalar
      * @param "s" the Rational Scalar that is added to this Rational Scalar
      */
+
     @Override
-    public Scalar addRational(Scalar s){
-        int nume = ((RationalScalar) s).numerator;
-        int deno = ((RationalScalar) s).denominator;
+    public Scalar addInteger(IntegerScalar s){
+        int num = s.getNumber();
+        return new RationalScalar((denominator * num) + numerator, denominator).reduce();
+    }
+    @Override
+    public Scalar addRational(RationalScalar s){
+        int nume = s.numerator;
+        int deno = s.denominator;
         int nResult = (nume * denominator ) + (numerator * deno);
         int dResult = deno * denominator;
         return new RationalScalar(nResult, dResult).reduce();
@@ -139,8 +140,8 @@ public class RationalScalar implements Scalar{
      * @param "s" the Integer Scalar that is multiplied with this Rational Scalar
      */
     @Override
-    public Scalar mulInteger(Scalar s){
-        int num = ((IntegerScalar) s).getValue();
+    public Scalar mulInteger(IntegerScalar s){
+        int num = s.getNumber();
         return new RationalScalar(num * numerator, denominator).reduce();
     }
 
@@ -150,21 +151,31 @@ public class RationalScalar implements Scalar{
      * @param "s" the Rational Scalar that is multiplied with this Rational Scalar
      */
     @Override
-    public Scalar mulRational(Scalar s){
-        int nume = ((RationalScalar) s).numerator;
-        int deno = ((RationalScalar) s).denominator;
+    public Scalar mulRational(RationalScalar s){
+        int nume = s.numerator;
+        int deno = s.denominator;
         return new RationalScalar(nume * numerator, deno * denominator).reduce();
     }
 
+    @Override
+    public Scalar addReal(RealScalar s) {
+        return new RealScalar(s.getNumber() + ((double) (this.numerator / this.denominator)));
+    }
+
+    @Override
+    public Scalar mulReal(RealScalar s) {
+        return new RealScalar(s.getNumber() * ((double) (this.numerator / this.denominator)));
+    }
+
     /*
-     * Returns the value of the numerator of this Rational Scalar
+     * returns the value of Numerator
      */
     public int getNumerator(){
         return numerator;
     }
 
     /*
-     * Returns the value of the denominator of this Rational Scalar
+     * returns the value of Denominator
      */
     public int getDenominator(){
         return denominator;

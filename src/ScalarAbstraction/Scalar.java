@@ -17,16 +17,20 @@ public interface Scalar {
     int sign();
 
     //returns the sum of the given scalar to this Integer Scalar
-    Scalar addInteger(Scalar s);
+    Scalar addInteger(IntegerScalar s);
 
     //returns the sum of the given scalar to this Rational Scalar
-    Scalar addRational(Scalar s);
+    Scalar addRational(RationalScalar s);
+
+    //returns the sum of the given scalar to this Real Scalar
+    Scalar addReal(RealScalar s);
 
     //returns the result of multiplying the given scalar to this Integer Scalar
-    Scalar mulInteger(Scalar s);
+    Scalar mulInteger(IntegerScalar s);
 
     //returns the result of multiplying the given scalar to this Rational Scalar
-    Scalar mulRational(Scalar s);
+    Scalar mulRational(RationalScalar s);
 
-
+    //returns the result of multiplying the given scalar to this Real Scalar
+    Scalar mulReal(RealScalar s);
 }

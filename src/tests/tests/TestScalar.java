@@ -11,7 +11,6 @@ public class TestScalar {
 
     @Test
     void test_addIntegers(){
-
         Scalar results = s.add(s2);
         assertEquals(new IntegerScalar(87370),results);
     }
