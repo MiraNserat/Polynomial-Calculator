@@ -9,31 +9,35 @@ public class  Polynomial {
         this.monomials = new ArrayList<>();
     }
 
-    public static Polynomial build(String input)
-    {
+    public static Polynomial build(String input) {
         Polynomial p = new Polynomial();
         String[] parts = input.split(" ");
-        for (int i = 0; i < parts.length; i++)
-        {
-            if (!parts[i].equals("0"))
-            {
+
+        for (int i = 0; i < parts.length; i++) {
+            if (!parts[i].equals("0")) {
                 Scalar coeff;
-                if (parts[i].contains("/"))
-                {
+
+                if (parts[i].contains("/")) {
                     String[] fraction = parts[i].split("/");
                     int num = Integer.parseInt(fraction[0]);
                     int den = Integer.parseInt(fraction[1]);
                     coeff = new RationalScalar(num, den);
+                } else if (parts[i].contains(".")) {
+                    double num = Double.parseDouble(parts[i]);
+                    coeff = new RealScalar(num);
                 } else {
                     int num = Integer.parseInt(parts[i]);
                     coeff = new IntegerScalar(num);
                 }
+
                 Monomial m = new Monomial(coeff, i);
                 p.monomials.add(m);
             }
         }
+
         return p;
     }
+
     public Polynomial add(Polynomial p) {
 
         Polynomial result = new Polynomial();
